@@ -1,0 +1,89 @@
+.site-name {
+    font-size: 120%;
+    padding: 0px 0px 2.5px 5px;
+}
+.navigation {
+    overflow: hidden;
+}
+.mat-toolbar {
+  min-height: 7vh !important;
+  height: 7vh !important;
+}
+a:hover {
+    text-decoration: none;
+    color:white;
+}
+.toolbar-option a {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    font-weight: 400;
+    justify-content: center;
+    line-height: 1.5;
+    min-height: 52px;
+    min-width: 80px;
+    position: relative;
+}
+button {
+    font-size: 110%;
+    min-width: min-content;
+}
+.spacer {
+    flex: 1 1 auto;
+}
+.toolbar-option a mat-icon {
+    position: relative;
+    display: inline-block;
+    font-size: 24px;
+    box-sizing: inherit;
+    padding: 0px 0px 0px 3px;
+}
+.toolbar-option a span {
+    font-size: 20px;
+}
+.toolbar-options {
+    display: flex;
+}
+.selected {
+    color: #79CDCD;
+}
+
+.menu-option:hover {
+    text-decoration: none;
+    color: white;
+    background-color: #79CDCD;
+}
+a .me-menu-option {
+    font-size: 16px;
+}
+a .me-menu-option:hover {
+    text-decoration: none;
+    color: black;
+}
+a .me-menu-option mat-icon {
+    font-size: 20px;
+    padding: 0px 0px 3px 5px;
+}
+
+.flexed-menu-option:hover {
+    text-decoration: none;
+    color: white;
+    background-color: #79CDCD;
+}
+
+.flexed-menu-option {
+    align-items: flex-start;
+    justify-content: center;
+}
+.flexed-menu-option span {
+    font-size: 16px;
+}
+.flexed-menu-option mat-icon {
+    font-size: 22px;
+    padding: 0px 0px 0px 3px;
+}
+
+.toolbar-container {
+    display: flex;
+}

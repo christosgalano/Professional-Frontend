@@ -1,0 +1,50 @@
+body{
+    margin-top:20px;
+    background-color: #ecf0f5;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.img-sm, .img-md, 
+.img-lg, .box-comments .box-comment img, 
+.user-block.user-block-sm img {
+    float: left;
+}
+.box-comments .comment-text {
+    margin-left: 40px;
+    color: #555;
+}
+.box-comments .username {
+    color: #444;
+    display: block;
+    font-weight: 600;
+}
+.box-comments .text-muted {
+    font-weight: 400;
+    font-size: 12px;
+}
+.img-sm+.img-push {
+    margin-left: 40px;
+}
+.box .form-control {
+    border-radius: 0;
+    box-shadow: none;
+    border-color: #d2d6de;
+}
+
+#write-comment {
+    resize: none;
+    width: 80%;
+    height: 30px;
+    margin-left: 1em;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.user-profile-picture {
+    width: 30px !important;
+    height: 30px !important;
+    float: left;
+    object-fit: cover;
+    overflow: hidden;
+    background-size: contain;
+    border-radius: 50%;
+}

@@ -1,0 +1,86 @@
+textarea {
+    font-size: 1.5em;
+    padding: 1em;
+    resize: none;
+    min-width: 450px;
+    min-height: 300px;
+    border: none;
+    outline: none;
+}
+
+.preview {
+    display: flex;
+    align-items:flex-end;
+    justify-content: center;
+    height: 150px;
+}
+
+.img-video-div video, .img-video-div img {
+    object-position: center;
+    width: 200px;
+    height: 125px;
+    padding: 2px;
+}
+
+.post-add{
+    align-self: center;
+    border: none;
+}
+
+.post-author:hover {
+    cursor: pointer;
+}
+
+#post-dialog-close {
+    position: absolute;
+    top: 7px;
+    right: 10px;
+    z-index: 100;
+}
+
+#post-dialog-close:hover {
+    cursor: pointer;
+}
+
+#files-upload {
+    display: none;
+}
+
+#add-post-image {
+    margin-right: 1em;
+}
+
+#add-post-image:hover{
+    cursor: pointer;
+}
+
+#post-image-icon:hover {
+    cursor: pointer;
+}
+
+#remove-image {
+    width: 15px;
+    height: 15px;
+}
+
+.preview .img-video-div video {
+    object-fit: scale-down;
+}
+.preview .img-video-div img {
+    object-fit: cover;
+}
+
+.img-video-div {
+    position: relative;
+}
+.img-video-div .remove {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    z-index: 100;
+}
+.img-video-div .remove mat-icon {
+    font-size: 15px;
+    font-weight: 800;
+    border: none;
+}

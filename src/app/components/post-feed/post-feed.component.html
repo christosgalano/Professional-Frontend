@@ -1,0 +1,26 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container" *ngIf="logged_in_user?.role === 'ROLE_USER'">
+    <app-post-item
+        *ngFor="let post of posts" [postId]="post.id!"
+        (onDeletePost)="deletePost(post)"
+        (onLikePost)="likePost(post)"
+        (onUpdatePost)="updatePost($event)"
+    ></app-post-item>
+    <button (click)="openDialog()" mat-fab color="primary" id="post-create-button" *ngIf="logged_in_user?.role === 'ROLE_USER'">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+
+<div class="container" *ngIf="logged_in_user?.role === 'ROLE_ADMIN'">
+    <div *ngIf="posts.length">
+        <app-post-item
+            *ngFor="let post of posts" [postId]="post.id!"
+            (onDeletePost)="deletePost(post)"
+            (onLikePost)="likePost(post)"
+            (onUpdatePost)="updatePost($event)"
+        ></app-post-item>
+    </div>
+    <div id="empty-content" *ngIf="!posts.length">
+        There are no posts to see.
+    </div>
+</div>

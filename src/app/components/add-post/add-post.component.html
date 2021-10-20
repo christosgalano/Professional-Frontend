@@ -1,0 +1,27 @@
+<mat-card class="post-add">
+  <fa-icon id="post-dialog-close"
+    (click)="onClose()"
+    [ngStyle]="{color:'black'}"
+    [icon]="faTimes"
+  ></fa-icon>
+  <div class="body-input">
+    <textarea matInput [(ngModel)]="body" placeholder="What's on your mind?"></textarea>
+  </div>
+  <div class="preview">
+    <div class="img-video-div" *ngFor="let file of preview">
+      <button mat-icon-button class="remove" (click)="onRemoveFile(file)"><mat-icon>clear</mat-icon></button>
+      <img *ngIf="file.type.startsWith('image/')" [src]="file.data"/>
+      <video *ngIf="file.type.startsWith('video/')" [src]="file.data" controls></video>
+    </div>
+  </div>  
+  <mat-card-actions align="end">
+    <button mat-button-color="warn" id="add-post-image">
+      <label for="files-upload">
+        <input #fileSelector multiple (change)="onFileChange(fileSelector)"
+          id="files-upload" type="file" accept="image/*,video/*">
+        <mat-icon color="primary" id="post-image-icon">insert_photo</mat-icon>
+      </label>
+    </button>
+    <button mat-flat-button id="add-post-button" color="primary" (click)="onSubmit()">Add Post</button>
+  </mat-card-actions>
+</mat-card>

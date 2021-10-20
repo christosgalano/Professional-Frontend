@@ -1,0 +1,240 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<div class="container bootstrap" id="user-profile" [class.blur]="showPicture || showUpdatedPicture">
+    <div class="row header">
+        <div class="col-sm-10">
+            <div>
+                <h1 id="user-full-name">{{ user.fullName }}</h1></div>
+                <div class="actions">
+                    <app-connection-item
+                        [primary_user]="logged_in_user"
+                        [other_user]="user"
+                        [profile]="true"
+                        (onDeleteAccount)="onDeleteUser()"
+                        (onLockAccount)="onLockAccount()">
+                    </app-connection-item>
+                    <app-send-message-item
+                        *ngIf="logged_in_user.role === 'ROLE_USER'"
+                        [primary_user]="logged_in_user"
+                        [other_user]="user"
+                        [profile]="true">
+                    </app-send-message-item>
+                    <app-download-info
+                        *ngIf="logged_in_user.role === 'ROLE_ADMIN'"
+                        [logged_in_user]="logged_in_user"
+                        [user]="user">
+                    </app-download-info>
+                </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="pull-left">
+                <img title="profile image" id="user-profile-picture" class="img-circle img-responsive" src="data:image/jpeg;base64,{{user.profilePicture}}" (click)="clickProfilePicture()">
+                <div *ngIf="profilePictureDropdown == true" class="dropdown-content">
+                    <a class="upload-profile-picture" *ngIf="areUsersSame()">
+                        <span>Update photo</span>
+                        <label for="file-upload">
+                            <input #fileSelector (change)="onFileSelected(fileSelector)" id="file-upload" type="file" accept="image/*">
+                            <mat-icon color="primary" id="user-image-icon">insert_photo</mat-icon>
+                        </label>
+                    </a>
+                    <a class="reset-option" (click)="resetProfilePicture()" *ngIf="areUsersSame() || user.role === 'ROLE_ADMIN'">Reset photo</a>
+                    <a class="see-option" (click)="showProfilePicture()">See photo</a>
+                </div>
+                <i class="bi bi-camera-fill"></i>
+                <div class="profile-hvr m-t-15">
+                    <i class="icofont icofont-ui-edit p-r-10"></i>
+                    <i class="icofont icofont-ui-delete"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row main">
+        <div class="col-sm-3">
+            <ul class="list-group">
+                <li class="list-group-item text-muted">Profile</li>
+                <li *ngIf="user.dob" class="list-group-item text-right"><span class="pull-left"><strong>Birthday: </strong></span>   {{ user.dob | date }}</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Email:</strong></span>   {{ user.email }}</li>
+                <li *ngIf="user.phone" class="list-group-item text-right"><span class="pull-left"><strong>Phone: </strong></span>   {{ user.phone }}</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Joined:</strong></span>  {{ user.createdDate | date }}</li>
+
+            </ul>
+
+            <ul class="list-group">
+                <li class="list-group-item text-muted">Activity</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Advertisements: </strong></span>  {{ no_advertisements }}</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Posts: </strong></span>  {{ no_posts }}</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Connections: </strong></span>  {{ no_connections }}</li>
+            </ul>
+        </div>
+
+        <div class="col-sm-9 info-tab">
+            <mat-toolbar color="primary">
+                <mat-toolbar-row [class.center]="!areUsersSame()">
+                    <button mat-button class="category" (click)="onShowGeneral()" [class.active]="generalClicked">General</button>
+                    <button  *ngIf="areUsersSame()" class="category" (click)="onShowEditProfile()" [class.active]="editProfileClicked">Edit Profile</button>
+                </mat-toolbar-row>
+            </mat-toolbar>
+            <div class="tab-content">
+                <div class="tab-pane" [class.active]="generalClicked">
+                    <div class="info-div" *ngFor="let info of profileInfo">
+                        <h3>{{ info.title }}</h3><hr>
+                        <p *ngIf="!info.isPrivate">{{ info.content }}</p>
+                        <p *ngIf="info.isPrivate && (areUsersSame() || logged_in_user.role === 'ROLE_ADMIN')">{{ info.content }}</p>
+                        <p *ngIf="info.isPrivate && !(areUsersSame() || logged_in_user.role === 'ROLE_ADMIN')">This information is private</p>
+                    </div>
+                </div>
+                <div class="tab-pane" [class.active]="editProfileClicked">
+                    <mat-card class="user-edit">
+                        <form [formGroup]="form" (ngSubmit)="onSubmit()">                          
+                                <mat-card-content>
+    
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="labels">First Name</label>
+                                            <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
+                                            <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                                                <div *ngIf="f.firstName.errors.required">First name is required</div>
+                                                <div *ngIf="f.firstName.errors.minlength">First name must be at least 2 characters</div>
+                                                <div *ngIf="f.firstName.errors.maxlength">First name must must not exceed 40 characters</div>
+                                                <div *ngIf="f.firstName.errors.whitespace">First name must not contain whitespace characters</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="labels">Last Name</label>
+                                            <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
+                                            <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                                                <div *ngIf="f.lastName.errors.required">Last name is required</div>
+                                                <div *ngIf="f.lastName.errors.minlength">Last name must be at least 2 characters</div>
+                                                <div *ngIf="f.lastName.errors.maxlength">Last name must must not exceed 40 characters</div>
+                                                <div *ngIf="f.lastName.errors.whitespace">Last name must not contain whitespace characters</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="labels">Phone</label>
+                                            <input type="text" formControlName="phone" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }">
+                                            <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                                                <div *ngIf="f.phone.errors.pattern">Phone number is invalid</div>
+                                                <div *ngIf="f.phone.errors.minlength">Phone number must be exactly 10 digits</div>
+                                                <div *ngIf="f.phone.errors.maxlength">Phone number must be exactly 10 digits</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="labels">Date of birth</label>
+                                        <div class="form-group">
+                                            <input matInput [matDatepicker]="picker" formControlName="dob" placeholder="Choose a date" class="date" readonly>
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker ></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label class="labels">Education</label><br>
+                                            <textarea  type="text" formControlName="education" class="form-control" placeholder="Description of your education..."></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" id="visibility">
+                                        <span class="visibility-span">Education Private</span><br>
+                                        <input *ngIf='f.educationPrivate.value' type="radio" id="add-education-visibility-yes" value="true" checked (click)="changeVisibility('education',true)">
+                                        <input *ngIf='!f.educationPrivate.value' type="radio" id="add-education-visibility-yes" value="true" (click)="changeVisibility('education',true)">
+                                        <label class="labels" for="add-education-visibility-yes">Yes</label>
+                                        <input *ngIf='!f.educationPrivate.value' type="radio" id="add-education-visibility-no" value="false" checked (click)="changeVisibility('education',false)">
+                                        <input *ngIf='f.educationPrivate.value' type="radio" id="add-education-visibility-no" value="false" (click)="changeVisibility('education',false)">
+                                        <label class="labels" for="add-education-visibility-no">No</label>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-8">
+                                        <label class="labels">Work Experience</label><br>
+                                        <textarea  type="text" formControlName="workExperience" class="form-control" placeholder="Description of your work experience..."></textarea>
+                                    </div>
+                                    <div class="col-md-4" id="visibility">
+                                        <span class="visibility-span">Work Experience Private</span><br>
+                                        <input *ngIf='f.workExperiencePrivate.value' type="radio" id="add-work-visibility-yes" value="true" checked (click)="changeVisibility('workExperience',true)">
+                                        <input *ngIf='!f.workExperiencePrivate.value' type="radio" id="add-work-visibility-yes" value="true" (click)="changeVisibility('workExperience',true)">
+                                        <label class="labels" for="add-work-visibility-yes">Yes</label>
+                                        <input *ngIf='!f.workExperiencePrivate.value' type="radio" id="add-work-visibility-no" value="false" checked (click)="changeVisibility('workExperience',false)">
+                                        <input *ngIf='f.workExperiencePrivate.value' type="radio" id="add-work-visibility-no" value="false" (click)="changeVisibility('workExperience',false)">
+                                        <label class="labels" for="add-work-visibility-no">No</label>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-8">
+                                        <label>Skills</label><br>
+                                        <textarea  type="text" formControlName="skills" class="form-control" placeholder="Description of your skills..."></textarea>
+                                    </div>
+                                    <div class="col-md-4" id="visibility">
+                                        <span class="visibility-span">Skills Private</span><br>
+                                        <input *ngIf='f.skillsPrivate.value' type="radio" id="add-skills-visibility-yes" value="true"  checked (click)="changeVisibility('skills',true)">
+                                        <input *ngIf='!f.skillsPrivate.value' type="radio" id="add-skills-visibility-yes" value="true"  (click)="changeVisibility('skills',true)">
+                                        <label class="labels" for="add-skills-visibility-yes">Yes</label>
+                                        <input *ngIf='!f.skillsPrivate.value' type="radio" id="add-skills-visibility-no" value="false"  checked (click)="changeVisibility('skills',false)">
+                                        <input *ngIf='f.skillsPrivate.value' type="radio" id="add-skills-visibility-no" value="false"  (click)="changeVisibility('skills',false)">
+                                        <label class="labels" for="add-skills-visibility-no">No</label>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                            <mat-card-actions align="end">
+                                <button mat-flat-button type="submit" class="btn btn-primary" id="save-user-edit-button" color="primary" (click)="onSubmit()">Save Changes</button>
+                                <button mat-flat-button class="btn btn-primary" id="cancel-user-edit-button" (click)="onCancel()">Cancel</button>
+                            </mat-card-actions>
+                        </form>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- See Profile Picture Modal  -->
+<div [class.open]="showPicture" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <fa-icon id="hide-profile-picture"
+                    (click)="hideProfilePicture()"
+                    [ngStyle]="{color:'black'}"
+                    [icon]="faTimes"
+                ></fa-icon>
+            </div>
+        <div class="modal-body">
+          <img class="img-fluid" src="data:image/jpeg;base64,{{user.profilePicture}}" class="img-fluid width-100">
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- See Updated Profile Picture Modal  -->
+<div [class.open]="showUpdatedPicture" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <fa-icon id="hide-profile-picture"
+                    (click)="cancelUpdateOfProfilePicture()"
+                    [ngStyle]="{color:'black'}"
+                    [icon]="faTimes"
+                ></fa-icon>
+            </div>
+            <div class="modal-body">
+                <img class="img-fluid" id="post-preview-image" src="{{selectedFile}}" class="img-fluid width-100">
+            </div>
+            <div class="modal-footer">
+                <button mat-flat-button class="btn btn-primary" id="save-profile-picture-button" color="primary" (click)="updateProfilePicture()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>

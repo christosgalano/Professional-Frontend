@@ -1,0 +1,90 @@
+#user-profile-picture {
+    float: left;
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    overflow: hidden;
+    background-size: contain;
+    border-radius: 50%;
+}
+
+#username-link {
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    font-size: 15px;
+    text-align: center;
+    margin-left: 1.5em;
+}
+
+#username-link:hover {
+    cursor: pointer;
+}
+
+#request-connection-btn {
+    width: 120px;
+    height: 30px;
+    margin-left: 1.5em;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#request-connection-btn span {
+    font-size: 12px;
+}
+
+
+.user-block {
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+ul {
+    display: table;
+    align-items:center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+li {
+    display: block;
+    flex: 0 1 auto;
+    list-style-type: none;
+}
+
+.applicants-header {
+    display: flex;
+    justify-content: space-between;
+}
+.applicants-header h1 {
+    float: left;
+}
+
+.applicants-header #applicants-close {
+    float: right;
+}
+.applicants-header #applicants-close:hover {
+    cursor: pointer;
+}
+
+
+.applicants-header-empty {
+    display: block;
+    justify-content: left;
+}
+.applicants-header-empty h1 {
+    float: left;
+    margin-right: 60px;
+}
+.applicants-header-empty #applicants-close {
+    float: right;
+    margin-top: 2px;
+}
+.applicants-header-empty #applicants-close:hover {
+    cursor: pointer;
+}

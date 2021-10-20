@@ -1,0 +1,208 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<div class="container" id="container">
+  <div class="row">
+    <div class="col-lg-10 mx-auto">
+      <div class="career-search mb-60">
+        <form  class="career-form mb-60" id="submitForm" >
+          <div class="row search-bar">
+            <div class="col-md-6 col-lg-3 my-3 search-option">
+              <div class="input-group position-relative">
+                <input type="text"  name="kewWords"  class="form-control" placeholder="Enter Keywords" id="keywords">
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3 my-3 search-option">
+              <div class="input-group position-relative">
+                <input type="text" name="location"  class="form-control" placeholder="Enter Location" id="location">
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3 my-3 search-option">
+              <div class="select-container">
+                <select class="custom-select" id="jobType">
+                  <option selected=""  value="ALL">All</option>
+                  <option value="FULLTIME">Full-time</option>
+                  <option value="PARTTIME">Part-time</option>
+                  <option value="TEMPORARY">Temporary</option>
+                  <option value="INTERNSHIP">Internship</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3 my-3 search-option">
+              <div class="input-group position-relative">
+                <div class="form-control">
+                  <div class="form-check form-switch">
+                    <input (click)="onChangeRemote()" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                    <label color="white" for="flexSwitchCheckDefault">Remote</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3 my-3 search-option">
+              <div class="input-group position-relative">
+                <div class="form-control">
+                  <div class="form-check form-switch">
+                    <input (click)="onChangeSaved()" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                    <label color="white" for="flexSwitchCheckDefault">Saved</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3 my-3 search-option">
+                <button (click)="clickSearchButton()"  type="button" class="btn btn-lg btn-block btn-light btn-custom search-btn" id="contact-submit">
+                  Search
+                </button>
+            </div>
+          </div>
+        </form>
+
+        <div class="filter-result">
+          <div class="header-filtered">
+            <div class="total-jobs">
+              <p class="mb-30 ff-montserrat">Total Job Openings : {{ totalJobOpenings() }}</p> 
+            </div>
+            <button (click)="onAdd()" type="button"  class="addJobAddbutton" [class.hidden]="logged_in_user.role === 'ROLE_ADMIN'">
+              <i class="bi bi-plus-square"></i>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 20 19">
+                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              </svg>
+              Add Job Advertisment
+            </button>
+          </div>
+
+          <div *ngIf="pageJobAds.length">
+            <div *ngFor = "let jobAd of pageJobAds" class="job-box d-md-flex align-items-center justify-content-between mb-30">
+              <div class="job-outer">
+                <div class="job-content">
+                  <div class="box-tools">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="areUsersSame(jobAd) || logged_in_user.role === 'ROLE_ADMIN'">
+                      <mat-icon>more_horiz</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item (click)="onEdit(jobAd)" *ngIf="logged_in_user.role === 'ROLE_USER'">
+                        <div class="menu-option">
+                          <span class="menu-option-description">Edit</span>       
+                          <mat-icon>edit</mat-icon>
+                        </div>
+                      </button>
+                      <button mat-menu-item (click)="onDelete(jobAd)">
+                        <div class="menu-option">
+                          <span class="menu-option-description">Delete</span>
+                          <mat-icon>delete</mat-icon>
+                        </div>
+                      </button>
+                    </mat-menu>
+                    <button mat-icon-button *ngIf="!(areUsersSame(jobAd) || logged_in_user.role === 'ROLE_ADMIN')" (click)="saveJobAd(jobAd)" class="save-icon">
+                      <mat-icon *ngIf="hasSaved(logged_in_user.id!, jobAd)">star</mat-icon>
+                      <mat-icon *ngIf="!hasSaved(logged_in_user.id!, jobAd)">star_border</mat-icon>
+                    </button>
+                  </div>
+                  <ul class="header-content">
+                    <li class="mr-md-4 header-option">
+                      <div class="li-img">
+                        <img id="user-profile-picture" src="data:image/jpeg;base64,{{jobAd.advertiser!.profilePicture!}}" />
+                      </div>
+                    </li>
+                    <li class="mr-md-4 header-option">
+                      <div class="image-word">
+                        <a [routerLink]="['/users', jobAd.advertiser!.id]" class="username-link">
+                          <mat-icon>account_box</mat-icon>
+                          <span>
+                            {{ jobAd.advertiser!.fullName! }}
+                          </span>
+                        </a>
+                      </div>
+                    </li>
+                    <li class="mr-md-4 header-option">
+                      <div class="image-word">
+                        <mat-icon>work</mat-icon>
+                        <span>
+                          {{ jobAd.title! | titlecase }}
+                        </span>
+                      </div>
+                    </li>
+                    <li class="mr-md-4 header-option">
+                      <div class="image-word">
+                        <mat-icon>place</mat-icon>
+                        <span>
+                          {{ jobAd.location! | titlecase }}
+                        </span>
+                      </div>
+                    </li>
+                    <li class="mr-md-4 header-option">
+                      <div class="image-word">
+                        <mat-icon>info</mat-icon>
+                        <span>
+                          {{ jobAd.employmentType! | employmentType }}
+                        </span>
+                      </div>
+                    </li>
+                    <li class="mr-md-4 header-option" *ngIf="jobAd.remote">
+                      <div class="image-word">
+                        <mat-icon>wifi</mat-icon>
+                        <span>
+                          Remote
+                        </span>
+                      </div>
+                    </li>
+                  </ul>
+                  <hr>
+                </div>
+                <div class="description">
+                  <p class="mr-md-4" id="jobAd-description">{{ jobAd.description }}</p>
+                </div>
+                <div class="applicants">
+                  <span class="pull-right text-muted" id="stats">
+                    <a (click)="openDialog(jobAd)" id="applicants-stats" *ngIf="jobAd.applicants!.length !== 1">{{ jobAd.applicants!.length }} Applicants</a>  
+                    <a (click)="openDialog(jobAd)" id="applicants-stats" *ngIf="jobAd.applicants!.length === 1">{{ jobAd.applicants!.length }} Applicant</a>
+                  </span>
+                </div>
+              </div>
+              <div class="apply">
+                <button type="button" class="jobAd-apply-btn" mat-flat-button color="primary" (click)="onApply(jobAd)" *ngIf="logged_in_user.role === 'ROLE_USER' && !areUsersSame(jobAd)">
+                  <span id="jobAd-apply" *ngIf="!hasApplied(logged_in_user.id!, jobAd)">Apply</span>
+                  <span id="jobAd-apply" *ngIf="hasApplied(logged_in_user.id!, jobAd)">Applied</span>
+                </button>
+              </div>
+          </div>
+          </div>
+
+          <div *ngIf="!pageJobAds.length" id="empty-content">
+            There are no job advertisements that fit the criteria.
+          </div>
+
+        </div>
+        <nav aria-label="Page navigation">
+          <ul class="pagination pagination-reset justify-content-center">
+            <li *ngIf=" previouslyEnabled === 1" class="page-item disabled">
+              <a (click)="clickNumberButton(previouslyEnabled-1)" class="page-link"  >
+                <i class="zmdi zmdi-long-arrow-left"></i>
+              </a>
+            </li>
+            <li *ngIf=" previouslyEnabled !== 1" class="page-item">
+              <a (click)="clickNumberButton(previouslyEnabled-1)" class="page-link"   >
+                <i class="zmdi zmdi-long-arrow-left"></i>
+              </a>
+            </li>
+            <li  (click)="clickNumberButton(1)"  class="page-item"><a [id]="1" class="page-link" >1</a></li>
+            <li *ngIf="numberOfPages > 5 &&  3 !== windowMidle" class="page-item"><a class="page-link" >...</a></li>
+            <div *ngFor="let item of buttons; let i = index">
+              <li  *ngIf="i== windowMidle || i==  windowMidle -1 ||i==  windowMidle+1"  (click)="clickNumberButton(i)"   class="page-item d-none d-md-inline-block"><a class="page-link" [id]="i" >{{i}}</a></li>
+            </div>
+            <li *ngIf="numberOfPages > 5 &&   numberOfPages - 2 !== windowMidle" class="page-item"><a class="page-link" >...</a></li>
+            <li *ngIf="numberOfPages > 1" (click)="clickNumberButton(numberOfPages)"  class="page-item"><a [id]="numberOfPages" class="page-link" >{{ numberOfPages }}</a></li>
+            <li *ngIf=" previouslyEnabled !== numberOfPages" class="page-item">
+              <a (click)="clickNumberButton(previouslyEnabled+1)" class="page-link" >
+                <i class="zmdi zmdi-long-arrow-right"></i>
+              </a>
+            </li>
+            <li *ngIf=" previouslyEnabled === numberOfPages" class="page-item disabled">
+              <a (click)="clickNumberButton(previouslyEnabled+1)" class="page-link" >
+                <i class="zmdi zmdi-long-arrow-right"></i>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>

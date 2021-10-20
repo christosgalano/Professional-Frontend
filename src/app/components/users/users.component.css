@@ -1,0 +1,137 @@
+.container {
+    padding-top: 10px;
+    margin: auto;
+    height: auto;
+    width: 750px;
+}
+
+mat-toolbar div {
+    display: flex;
+    justify-content: space-between;
+}
+mat-toolbar button:hover {
+    cursor: pointer;
+    color: #79CDCD;
+    text-decoration: underline #79CDCD;
+}
+mat-toolbar button {
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    text-emphasis: 600;
+    color: white;
+    text-align: center;
+}
+mat-toolbar .category {
+    width: 50%;
+    padding: 0px 5px 0px 5px;
+}
+mat-toolbar .category.active{
+    color: #79CDCD;
+    text-decoration: underline #79CDCD;
+}
+mat-toolbar .search-icon {
+    width: 25%;
+    padding: 0px;
+}
+mat-toolbar .search-bar-icon:hover {
+    pointer-events: none;
+    cursor: not-allowed;
+}
+mat-toolbar .search-bar {
+    background: transparent;
+    display: inline;
+}
+
+.search-input {
+    border: black 0;
+    background-color: transparent;
+    min-width: 250px;
+    width: 600px;
+    font-size: 18px;
+    transition: all 250ms ease-in-out;
+}
+.search-input:focus {
+    outline: 0;
+}
+.search-block {
+    width: 100%; 
+    text-align: left; 
+    color: black;
+    background-color: white;
+    border-radius: 3px;
+    justify-content: baseline;
+}
+.search-block .search-icon {
+    color: black;
+    width: 10%;
+    border: none;
+    float: left;
+}
+.search-block .close-icon {
+    color: black;
+    width: 10%;
+    border: none;
+    float: right;
+}
+
+.no-results {
+    margin-top: 60px;
+    display: flex;
+}
+.no-results span {
+    padding-top: 3px;
+    font-size: 20px;
+    text-emphasis: 500;
+}
+
+
+mat-list {
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+    margin-top: 20px;
+}
+
+mat-list-item {
+    align-items: baseline;
+    justify-content: start;
+    text-align: left;
+}
+
+#user-profile-picture {
+    float: left;
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    overflow: hidden;
+    background-size: contain;
+    border-radius: 50%;
+}
+
+#username-link {
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    font-size: 15px;
+    text-align: center;
+    margin-left: 1.5em;
+}
+
+#username-link:hover {
+    cursor: pointer;
+}
+
+.user-block {
+    background: rgba(121, 205, 205, .1);
+    border: 1px solid lightblue;
+    border-radius: 3px;
+    align-self: center;
+    width: 100%;
+    height: 85%;
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+}

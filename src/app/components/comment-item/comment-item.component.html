@@ -1,0 +1,44 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="box-comment">
+  <div class="box-header">
+    <div class="box-tools">
+      <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="areUsersSame() || logged_in_user.role === 'ADMIN'">
+        <mat-icon>more_horiz</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="onEdit()">
+          <div class="menu-option">
+            <span class="menu-option-description" *ngIf="logged_in_user.role === 'ROLE_USER'">Edit</span>       
+            <mat-icon>edit</mat-icon>
+          </div>
+        </button>
+        <button mat-menu-item (click)="onDelete()">
+          <div class="menu-option">
+            <span class="menu-option-description">Delete</span>
+            <mat-icon>delete</mat-icon>
+          </div>
+        </button>
+      </mat-menu>
+    </div>
+    <img class="user-profile-picture" src="data:image/jpeg;base64,{{author.profilePicture}}" alt="User Image">
+    <div class="comment-text">
+      <span class="username">
+      <a [routerLink]="['/users', author.id]" id="username-link">{{ author.fullName }}</a>
+      <span class="description">{{ comment.createdDate! | dateAgo }}</span>
+      </span>
+    </div>
+  </div>
+    <div class="comment-body">
+      {{ comment.body }}
+      <div class="button-actions">
+        <button type="button" class="btn btn-default btn-xs bnt-like" (click)="onLike()">
+          <i *ngIf="!liked" class="fa fa-thumbs-o-up"></i> <span id="comment-like" *ngIf="!liked">Like</span>
+          <i *ngIf="liked" class="fa fa-thumbs-up"></i> <span id="comment-liked" *ngIf="liked">Liked</span>
+        </button>
+        <a href="#" id="comment-like-stats" (click)="openDialog()">
+          <span *ngIf="!likes.length || likes.length > 1" id="no-likes">{{ likes.length }} likes</span>
+          <span *ngIf="likes.length == 1" id="no-likes">{{ likes.length }} like</span>
+        </a>
+      </div>
+    </div>
+</div>

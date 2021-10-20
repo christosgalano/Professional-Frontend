@@ -1,0 +1,55 @@
+.jobAd-add {
+    display: block;
+    align-self: center;
+    border: none;
+    min-width: 400px;
+    min-height: 300px;
+}
+
+.jobAd-author:hover {
+    cursor: pointer;
+}
+
+#jobAd-dialog-close {
+    position: absolute;
+    top: 7px;
+    right: 10px;
+    z-index: 100;
+}
+
+#jobAd-dialog-close:hover {
+    cursor: pointer;
+}
+
+.jobAd-add{
+    align-self: center;
+    border: none;
+}
+
+mat-card-header {
+    margin: 0px 0px 10px 25px;
+    align-self: center;
+    text-align: center;
+    font-size: 25px;
+    text-emphasis: 800;
+}
+
+.form-group {
+    padding: 5px 0px 3px 0px;
+}
+
+label {
+    font-size: 15px;
+    text-emphasis: 800;
+}
+
+textarea {
+    resize: none;
+    min-width: 250px;
+    min-height: 100px;
+}
+
+mat-card-content {
+    display: block;
+    justify-content: space-around;
+}

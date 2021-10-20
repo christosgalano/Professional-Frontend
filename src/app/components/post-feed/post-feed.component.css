@@ -1,0 +1,13 @@
+#post-create-button {
+    position: fixed;
+    bottom: 2em;
+    right: 2em;
+}
+
+#empty-content {
+    text-align: center;
+    font-size: 20px;
+    text-emphasis: 600;
+    margin: auto;
+    margin-top: 20px;
+}

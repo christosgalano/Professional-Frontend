@@ -1,0 +1,24 @@
+textarea {
+    font-size: 1.5em;
+    padding: 1em;
+    resize: none;
+    min-width: 450px;
+    min-height: 300px;
+    border: none;
+    outline: none;
+}
+
+.comment-edit {
+    align-self: center;
+    border: none;
+}
+
+#comment-dialog-close {
+    position: absolute;
+    top: 7px;
+    right: 10px;
+    z-index: 100;
+}
+#comment-dialog-close:hover {
+    cursor: pointer;
+}

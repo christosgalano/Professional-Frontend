@@ -1,0 +1,46 @@
+<div class="image-row-1" *ngIf="files.length == 1">
+    <div class="image-column-1" *ngFor="let file of files; let i = index">
+        <video *ngIf="file.type.startsWith('video/')" src="data:{{file.type}};base64,{{file.data}}" (click)="openModal();currentSlide(i+1)" class="hover-shadow cursor" controls></video>
+        <img *ngIf="file.type.startsWith('image/')" src="data:{{file.type}};base64,{{file.data}}" (click)="openModal();currentSlide(i+1)" class="hover-shadow cursor">
+</div>
+</div>
+<div class="image-row-2" *ngIf="files.length == 2">
+    <div class="image-column-2" *ngFor="let file of files; let i = index">
+        <video *ngIf="file.type.startsWith('video/')" src="data:{{file.type}};base64,{{file.data}}" (click)="openModal();currentSlide(i+1)" class="hover-shadow cursor" controls></video>
+        <img *ngIf="file.type.startsWith('image/')" src="data:{{file.type}};base64,{{file.data}}" (click)="openModal();currentSlide(i+1)" class="hover-shadow cursor">
+    </div>
+    </div>
+
+<div class="image-row-3" *ngIf="files.length == 3">
+<div class="image-column-3" *ngFor="let file of files; let i = index">
+    <video *ngIf="file.type.startsWith('video/')" src="data:{{file.type}};base64,{{file.data}}" (click)="openModal();currentSlide(i+1)" class="hover-shadow cursor" controls></video>
+    <img *ngIf="file.type.startsWith('image/')" src="data:{{file.type}};base64,{{file.data}}" (click)="openModal();currentSlide(i+1)" class="hover-shadow cursor">
+</div>
+</div>
+<div class="image-row-4">
+    <table *ngIf="files.length == 4">
+        <tr>
+            <td class="image-column" *ngFor="let file of files.slice(0, 2); let i = index">
+                <video *ngIf="file.type.startsWith('video/')" src="data:{{file.type}};base64,{{file.data}}" (click)="openModal();currentSlide(i+1)" class="hover-shadow cursor" controls></video>
+                <img *ngIf="file.type.startsWith('image/')" src="data:{{file.type}};base64,{{file.data}}" (click)="openModal();currentSlide(i+1)" class="hover-shadow cursor">
+            </td>
+        </tr>
+        <tr>
+            <td class="image-column" *ngFor="let file of files.slice(2, 4); let i = index">
+                <video *ngIf="file.type.startsWith('video/')" src="data:{{file.type}};base64,{{file.data}}" (click)="openModal();currentSlide(i+1)" class="hover-shadow cursor" controls></video>
+                <img *ngIf="file.type.startsWith('image/')" src="data:{{file.type}};base64,{{file.data}}" (click)="openModal();currentSlide(i+1)" class="hover-shadow cursor">
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="imgModal{{id}}" class="slide-modal">
+    <span class="close cursor" (click)="closeModal()">&times;</span>
+    <div class="slide-modal-content">
+        <div class="img-slides img-slides-{{id}}" *ngFor="let file of files; let i = index">
+            <img *ngIf="file.type.startsWith('image/')" src="data:{{file.type}};base64,{{file.data}}">
+            <video *ngIf="file.type.startsWith('video/')" src="data:{{file.type}};base64,{{file.data}}" controls></video>
+        </div>
+        <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
+        <a class="next" (click)="plusSlides(1)">&#10095;</a>
+    </div>
+</div>

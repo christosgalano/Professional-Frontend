@@ -1,0 +1,97 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css" integrity="sha256-3sPp8BkKUE7QyPSl6VfBByBroQbKxKG7tsusY2mhbVY=" crossorigin="anonymous" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+
+
+<main class="content">
+  <div class="container p-0">
+    <div class="card" style="width: 80%  ; height : 91vh; margin-left: 10%; position: center; margin-top: 2.5%">
+      <div class=" row g-0 position-relative" >
+        <div class="users-list col-12 col-lg-5 col-xl-3 border-right chat-users" style=" height: 91vh; position: relative;">
+
+          <div class="px-4 d-none d-md-block">
+            <div class="d-flex align-items-center">
+              <div class="flex-grow-1">
+                <input type="text" name="key" (ngModelChange)="searchUsersChatRoom(key.value)" #key="ngModel" ngModel class="form-control my-3" placeholder="Search...">
+              </div>
+            </div>
+          </div>
+
+          <a *ngFor = "let chatRoom of printedChatRooms"  class="list-group-item list-group-item-action border-0 chatroom-item">
+            <div *ngIf="getTheOtherChatRoomUser(chatRoom)" (click)="setActiveUserAndChatRoom(chatRoom)" class="d-flex align-items-start">
+              <img src="data:image/jpeg;base64,{{tempUser?.profilePicture}}" class="rounded-circle mr-1" width="40" height="40">
+              <div class="flex-grow-1 ml-3">
+                {{tempUser?.fullName}}
+                <div class="online"> </div> <div style="margin-left: 17px; margin-top: -14px;"> Online</div>
+              </div>
+            </div>
+            <div class="unread-messages-number">{{getTheNumberOfUnreadMessages(chatRoom)}}</div>
+          </a>
+          <hr class="d-block d-lg-none mt-1 mb-0">
+
+        </div>
+        <div class="col-12 col-lg-7 col-xl-9">
+          <div class="py-2 px-4 border-bottom d-none d-lg-block">
+            <div class="d-flex align-items-center py-1" style="height: 5vh">
+                <div class="position-relative">
+                  <img *ngIf="activeUser != null "  src="data:image/jpeg;base64,{{tempUser?.profilePicture}}" class="rounded-circle mr-1"  width="40" height="40">
+                </div>
+                <div class="flex-grow-1 pl-3">
+                  <strong *ngIf="activeUser != null" (click)="onVisitUserProfile(tempUser!)" class="username-link">{{tempUser?.fullName}}</strong>
+                  <div *ngIf="activeUser != null" class="online"  > </div>
+                  <div *ngIf="activeUser != null" style="margin-left: 17px; margin-top: -14px;">Online</div>
+                </div>
+              </div>
+          </div>
+
+          <div class="position-relative"  >
+            <div class="chat-messages p-4"style=" height: 74vh;" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+              <div *ngIf="activeUser != null " >
+                <div *ngFor = "let message of activeMessages"   >
+                  <div *ngIf="message.sender?.id === mainUser?.id "    class="chat-message-right "  >
+                    <div *ngIf="activateUserPhoto(message)" ></div>
+                      <div class="message-r " >
+                        {{message.body}}
+                      </div>
+                      <span class="date-pop-up">
+                        {{ message.createdDate | date : "d MMMM yyyy - h:mm a"}}
+                      </span>
+                  </div>
+
+                  <div *ngIf="message.sender?.id === activeUser?.id "   class="chat-message-left ">
+
+
+                    <div  *ngIf="preveousMessage?.sender?.id === message.sender?.id && message.id !== activeMessages![0].id"  >
+                      <div class="chat-message-right pb-4" style="width:40px">
+                      </div>
+                    </div>
+
+
+                    <div *ngIf="printActiveUserPhoto(message)" >
+                      <div class="chat-message-right pb-4">
+                        <img    src="data:image/jpeg;base64,{{message.sender?.profilePicture}}"  class="rounded-circle mr-1" alt="Sharon Lessman" width="35" height="35" style="margin-bottom: -20px;">
+                      </div>
+                    </div>
+
+                    <div  class="message-l" >
+                      {{message.body}}
+                    </div>
+                    <span class="date-pop-up">
+                        {{ message.createdDate | date : "d MMMM yyyy - h:mm a"}}
+                    </span>
+                  </div>
+                  <img *ngIf="message?.id === lastSeen?.id " src="data:image/jpeg;base64,{{message.sender?.profilePicture}}" class="rounded-circle mr-1" alt="Chris Wood" style="  margin-top: -40px; position: relative;  margin-left: 100%" width="15" height="15">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="activeUser != null "  class="flex-grow-0 py-3 px-4 border-top" style="height: 5vh;">
+            <div class="input-group" style="margin-top: -1vh;">
+              <input type="text" class="form-control" id ="sendMessage" placeholder="Type your message" (keyup.enter)="sendMessage()"  >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

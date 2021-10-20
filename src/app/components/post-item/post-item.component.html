@@ -1,0 +1,68 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+  <div class="col-md-8">
+    <div class="box box-widget">
+      <div class="box-header with-border">
+        <div class="user-block">
+          <img class="user-profile-picture" src="data:image/jpeg;base64,{{author?.profilePicture}}" alt="User Image">
+          <span class="username"><a [routerLink]="['/users', author?.id]" id="username-link">{{ author?.fullName }}</a></span>
+          <span class="description">{{ post?.createdDate! | dateAgo}}</span>
+        </div>
+        <div class="box-tools" *ngIf="areUsersSame() || logged_in_user.role === 'ROLE_ADMIN'">
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="onEdit()" *ngIf="logged_in_user.role === 'ROLE_USER'">
+              <div class="menu-option">
+                <span class="menu-option-description">Edit</span>       
+                <mat-icon>edit</mat-icon>
+              </div>
+            </button>
+            <button mat-menu-item (click)="onDelete()">
+              <div class="menu-option">
+                <span class="menu-option-description">Delete</span>
+                <mat-icon>delete</mat-icon>
+              </div>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <div class="box-body">
+        <p class="post-body">{{ post?.body }}</p>
+        <app-image-view *ngIf="files.length" [files]="files" [id]="post.id"></app-image-view>
+        <div class="button-actions">
+          <div class="buttons">
+            <button type="button" class="btn btn-default btn-xs" (click)="onLike()">
+              <i *ngIf="!isLiked()" class="fa fa-thumbs-o-up"></i> <span id="post-like" *ngIf="!isLiked()">Like</span>
+              <i *ngIf="isLiked()" class="fa fa-thumbs-up"></i> <span id="post-liked" *ngIf="isLiked()">Liked</span>
+            </button>
+            <button type="button" class="btn btn-default btn-xs btn-comment" (click)="onComment()">
+              <i *ngIf="!showComments" class="fa fa-comment-o"></i> <span class="show-comments" *ngIf="!showComments">Comment</span>
+              <i *ngIf="showComments" class="fa fa-comment"></i> <span class="show-comments" *ngIf="showComments">Comment</span>
+            </button>
+          </div>
+          <div class="pull-right spans">
+            <span class="text-muted" id="stats">
+              <a (click)="openDialog()" id="like-stats" *ngIf="likes.length !== 1">{{ likes.length }} Likes</a>  
+              <a (click)="openDialog()" id="like-stats" *ngIf="likes.length === 1">{{ likes.length }} Like</a>  
+              -  
+              <a (click)="onComment()" id="comment-stats" *ngIf="comments.length !== 1">{{ comments.length }} Comments</a>
+              <a (click)="onComment()" id="comment-stats" *ngIf="comments.length === 1">{{ comments.length }} Comment</a>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showComments" class="box-footer">
+        <app-add-comment (onAddComment)="addComment($event)" [author]="logged_in_user" *ngIf="logged_in_user.role === 'ROLE_USER'"></app-add-comment>
+      </div>
+      <div *ngIf="showComments" class="box-footer box-comments">
+        <app-comment-item *ngFor="let comment of comments" [comment]="comment"
+          (onDeleteComment)="deleteComment(comment)"
+          (onLikeComment)="likeComment(comment)"
+          (onUpdateComment)="updateComment(comment)"  
+        ></app-comment-item>
+      </div>
+    </div>
+  </div>
+</div>

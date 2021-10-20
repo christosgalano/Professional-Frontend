@@ -1,0 +1,25 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+    <div class="row">
+      <div class="col-md-10">
+        <div class="card">
+          <div class="card-body">
+            <div id="content" *ngIf="notifications.length">
+              <ul class="timeline" *ngFor="let notification of notifications">
+                <li class="event">
+                  <app-notification-item 
+                      [notification]="notification"
+                      [user]="logged_in_user"
+                      (onDeleteNotification)="deleteNotification(notification)">
+                  </app-notification-item>
+                </li>
+              </ul>
+            </div>
+            <div id="empty-content" *ngIf="!notifications.length">
+              You have no new notifications.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

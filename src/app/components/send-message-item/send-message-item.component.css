@@ -1,0 +1,21 @@
+.send-message-btn {
+    width: 125px;
+    height: 30px;
+    margin-left: 1.5em;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.send-message-btn span {
+    font-size: 12px;
+}
+
+.profile {
+    width: 140px;
+    height: 40px;
+    margin-left: 5px;
+}
+.profile span {
+    font-size: 15px;
+}

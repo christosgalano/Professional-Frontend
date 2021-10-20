@@ -1,0 +1,84 @@
+<button 
+    *ngIf="conn.message === 'Request Connection' && primary_user.role === 'ROLE_USER'"  
+    mat-flat-button class="request-connection-btn"
+    id="request-connection" color="primary"
+    [class.profile]="profile"
+    (click)="onRequestConnection()">
+    <span>{{ conn.message }}</span>
+</button>
+
+<button 
+    *ngIf="conn.message === 'self' && !profile && primary_user.role === 'ROLE_USER'"  
+    mat-mini-fab id="view-profile"
+    [routerLink]="['/users', primary_user.id]">
+    <span>View Profile</span>
+</button>
+
+<button 
+    *ngIf="primary_user.role === 'ROLE_ADMIN' && !profile"  
+    mat-mini-fab id="view-profile"
+    [routerLink]="['/users', other_user.id]">
+    <span>View Profile</span>
+</button>
+
+<div class="admin-profile-options">
+    <button 
+        *ngIf="primary_user.role === 'ROLE_ADMIN' && profile"  
+        mat-flat-button id="delete-account"
+        (click)="deleteAccount()">
+        <span>Delete Account</span>
+    </button>
+    <button 
+        *ngIf="primary_user.role === 'ROLE_ADMIN' && profile"  
+        mat-flat-button id="lock-profile"
+        (click)="lockAccount()">
+        <span *ngIf="other_user.nonLocked">Lock Account</span>
+        <span *ngIf="!other_user.nonLocked">Unlock Account</span>
+    </button>
+</div>
+
+
+<button 
+    *ngIf="conn.message === 'self' && profile"  
+    mat-flat-button id="delete-account"
+    [class.profile]="profile"
+    (click)="deleteAccount()">
+    <span>Delete Account</span>
+</button>
+
+<button 
+    *ngIf="conn.message === 'Connected' && primary_user.role === 'ROLE_USER'"  
+    mat-flat-button class="request-connection-btn"
+    id="connected-btn" color="primary"
+    [class.profile]="profile"
+    (click)="onDeleteConnection()">
+    <span>{{ conn.message }}</span>
+    <mat-icon>check</mat-icon>
+</button>
+
+<button 
+    *ngIf="conn.message === 'Rejected Request' && primary_user.role === 'ROLE_USER'"  
+    mat-flat-button class="request-connection-btn"
+    [class.profile]="profile"
+    id="request-rejected-btn" color="primary">
+    <span>{{ conn.message }}</span>
+    <mat-icon>close</mat-icon>
+</button>
+
+<button 
+    *ngIf="conn.message === 'Pending Response' && primary_user.role === 'ROLE_USER'"  
+    mat-flat-button class="request-connection-btn"
+    [class.profile]="profile"
+    id="pending-response-btn"
+    (click)="onCancelRequest()">
+    <span>{{ conn.message }}</span>
+</button>
+
+<button 
+    *ngIf="conn.message === 'Connection Requested'"  
+    mat-flat-button class="request-connection-btn"
+    [class.profile]="profile"
+    id="request-received-btn"
+    (click)="onReplyToRequest()">
+    <span>{{ conn.message }}</span>
+</button>

@@ -1,0 +1,13 @@
+<mat-card class="comment-edit">
+  <fa-icon id="comment-dialog-close"
+    (click)="onClose()"
+    [ngStyle]="{color:'black'}"
+    [icon]="faTimes"
+  ></fa-icon>
+  <div class="body-input">
+    <textarea matInput [(ngModel)]="body" placeholder="What's on your mind?"></textarea>
+  </div>
+  <mat-card-actions align="end">
+    <button mat-flat-button id="save-comment-button" color="primary" (click)="onSubmit()">Save Comment</button>
+  </mat-card-actions>
+</mat-card>

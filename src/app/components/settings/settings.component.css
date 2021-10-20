@@ -1,0 +1,46 @@
+.save-btn {
+    background-color: #536DFE;
+    border-color: #536DFE;
+    margin-right: 5px;
+}
+
+.container {
+    display: block;
+    text-align: center;
+}
+
+form {
+    display: inline-block;
+    margin-left: 4%;
+    margin-right: 4%;
+    text-align: left;
+    line-height: 1.5em;
+}
+
+.form-group {
+    padding: 7px 35px 7px 35px;
+}
+
+.jumbotron {
+    background-color: lightgray;
+    background-size: cover; 
+    width: 100%;
+    height: 100vh;
+}
+
+.form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 999;
+    text-align: center;
+    padding: 40px 40px;
+    transform: translate(-50%,-50%);
+    background: white;
+    box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.75);
+}
+
+label {
+    font-size: 15px;
+    text-emphasis: 800;
+}

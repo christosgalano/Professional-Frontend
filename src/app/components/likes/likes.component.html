@@ -1,0 +1,26 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="likes-header-empty" *ngIf="!likes.length">
+    <h1 mat-dialog-header>Likes</h1>
+    <fa-icon id="likes-close"
+        (click)="onClose()"
+        [ngStyle]="{color:'black'}"
+        [icon]="faTimes"
+    ></fa-icon>
+</div>
+<div class="likes-header" *ngIf="likes.length">
+    <h1 mat-dialog-header>Likes</h1>
+    <fa-icon id="likes-close"
+        (click)="onClose()"
+        [ngStyle]="{color:'black'}"
+        [icon]="faTimes"
+    ></fa-icon>
+</div>    
+<ul *ngFor="let user of likes">
+    <li>
+        <div class="user-block">
+            <img id="user-profile-picture" src="data:image/jpeg;base64,{{user.profilePicture}}" alt="User Image">
+            <a [routerLink]="['users', user.id]" id="username-link" (click)="onClose()">{{ user.fullName }}</a>
+            <app-connection-item [primary_user]="logged_in_user" [other_user]="user"></app-connection-item>
+        </div>
+    </li>
+</ul>

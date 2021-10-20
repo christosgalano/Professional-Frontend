@@ -1,0 +1,8 @@
+<button
+    *ngIf="primary_user.id! !== other_user.id!"
+    mat-flat-button class="sent-message-btn"
+    id="send-message" color="primary"
+    [class.profile]="profile"
+    (click)="onSendMessage()">
+    <span>Send Message</span>
+</button>

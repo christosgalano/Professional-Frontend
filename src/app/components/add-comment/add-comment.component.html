@@ -1,0 +1,8 @@
+<form name="commentForm" (keydown)="onSubmit($event)">
+  <div class="user-block">
+    <img class="user-profile-picture" src="data:image/jpeg;base64,{{author?.profilePicture}}" alt="User Profile Image">
+    <div class="img-push">
+      <textarea matInput [(ngModel)]="body" placeholder="Write a comment..." id="write-comment" [ngModelOptions]="{standalone: true}"></textarea>
+    </div>
+  </div>
+</form>

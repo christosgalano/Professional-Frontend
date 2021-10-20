@@ -1,0 +1,89 @@
+.request-connection-btn {
+    width: 125px;
+    height: 30px;
+    margin-left: 1.5em;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.request-connection-btn span {
+    font-size: 12px;
+}
+
+#pending-response-btn, #request-received-btn {
+    background-color: lightgrey;
+}
+
+#view-profile {
+    font-size: 12px;
+    border-radius: 100%;
+    width: 120px;
+    height: 30px;
+    margin-left: 1.5em;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    color: #79CDCD;
+    border-color: #79CDCD;
+}
+#view-profile:hover {
+    color: white;
+    background-color: #79CDCD;
+    cursor: pointer;
+}
+
+#delete-account {
+    font-size: 15px;
+    width: 140px;
+    height: 40px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #B22222;
+    color: white;
+    border-color: #B22222;
+}
+#delete-account:hover {
+    background-color: #dc143c;
+    border-color: #dc143c;
+}
+
+.profile {
+    width: 140px;
+    height: 40px;
+    margin-left: 0;
+}
+.profile span {
+    font-size: 15px;
+}
+
+#lock-profile {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #B22222;
+    color: white;
+    border-color: #B22222;
+    margin-left: 5px;
+}
+#lock-profile:hover {
+    background-color: #dc143c;
+    border-color: #dc143c;
+}
+
+.admin-profile-options {
+    display: flex;
+}
+.admin-profile-options button {
+    width: 140px;
+    height: 40px;
+}
+.admin-profile-options button span {
+    font-size: 15px;
+}

@@ -1,0 +1,25 @@
+<div class="container">
+    <mat-toolbar color="primary">
+        <mat-toolbar-row class="search-block mat-elevation-z4">
+            <button class="search-bar-icon" mat-icon-button disabled>
+                <mat-icon>search</mat-icon>
+            </button>
+            <input class="search-input" type="text" placeholder="Search for users..." [(ngModel)]="searchText" #searchBar>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-list>
+        <mat-list-item *ngFor="let user of users | filterUsers: searchText">
+            <div class="user-block">
+                <img id="user-profile-picture" src="data:image/jpeg;base64,{{user.profilePicture}}" alt="User Image">
+                <a [routerLink]="['/users', user.id]" id="username-link">{{ user.fullName }}</a>
+                <app-download-info [logged_in_user]="logged_in_user" [user]="user" [searchBar]="true"></app-download-info>
+            </div>
+        </mat-list-item>
+        <mat-list-item *ngIf="(users | filterUsers: searchText).length === 0">
+            <div class="no-results">
+                <mat-icon mat-list-avatar class="no-results-option">error</mat-icon>
+                <span mat-line>No matching users</span>
+            </div>
+        </mat-list-item>        
+    </mat-list>
+</div>

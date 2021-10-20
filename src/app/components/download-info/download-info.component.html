@@ -1,0 +1,13 @@
+<div class="dropdown" [class.searchBar]="searchBar">
+    <button class="dropbtn">Download Information</button>
+    <div class="dropdown-content">
+      <a  class="content-top" *ngIf="!searchBar">Download User Information</a>
+      <hr style="margin: 1px;" *ngIf="!searchBar">
+      <a (click)="download('user')" [class.content-top]="searchBar">Download User</a>
+      <a (click)="download('job_ads')" >Download User Advertisements</a>
+      <a (click)="download('applications')" >Download User Applications</a>
+      <a (click)="download('posts')" >Download User Posts</a>
+      <a (click)="download('comments')" >Download User Comments</a>
+      <a (click)="download('network')" class="content-bottom">Download User Network</a>
+    </div>
+</div>

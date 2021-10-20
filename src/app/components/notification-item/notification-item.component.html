@@ -1,0 +1,44 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+    <div class="createdDate">{{ notification.createdDate | dateAgo }}</div>
+    
+    <div class="close">
+        <fa-icon id="notification-close"
+            (click)="onDelete()"
+            [ngStyle]="{color:'black'}"
+            [icon]="faTimes"
+        ></fa-icon>
+    </div>
+
+    <p *ngIf="notification.notificationType === 'LIKE'">
+        <a [routerLink]="['/users', notification.sender!.id]">{{ notification.sender!.fullName }}</a> has liked your
+        <a [routerLink]="['/posts', notification.post!.id]">
+            <span *ngIf="notification.body.includes('post')">post.</span>
+            <span *ngIf="notification.body.includes('comment')">comment.</span>
+        </a>
+    </p>
+
+    <p *ngIf="notification.notificationType === 'COMMENT'">
+        <a [routerLink]="['/users', notification.sender!.id]">{{ notification.sender!.fullName }}</a> has commented on your
+        <a [routerLink]="['/posts', notification.post!.id]">post.</a>
+    </p>
+
+    <p *ngIf="notification.notificationType === 'MESSAGE'">
+        <a [routerLink]="['/users', notification.sender!.id]">{{ notification.sender!.fullName }}</a> has 
+        <a [routerLink]="['/messages']">messaged</a> you.
+    </p>
+
+    <p *ngIf="notification.notificationType === 'REQUEST'">
+        <a [routerLink]="['/users', notification.sender!.id]">{{ notification.sender!.fullName }}</a> has
+        <span *ngIf="notification.body.includes('sent')"> sent you a</span>
+        <span *ngIf="notification.body.includes('accepted')"> accepted your </span>
+        <span *ngIf="notification.body.includes('rejected')"> rejected your </span>
+        <a [routerLink]="['/network']">connection request.</a>
+    </p>
+
+    <p *ngIf="notification.notificationType === 'APPLY'">
+        <a [routerLink]="['/users', notification.sender!.id]">{{ notification.sender!.fullName }}</a> has applied to your
+        <a [routerLink]="['/advertisements']">job advertisement.</a>
+    </p>
+
+</div>

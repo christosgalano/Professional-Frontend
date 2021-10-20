@@ -1,0 +1,43 @@
+<mat-card class="jobAd-add">
+    <fa-icon id="jobAd-dialog-close"
+      (click)="onClose()"
+      [ngStyle]="{color:'black'}"
+      [icon]="faTimes"
+    ></fa-icon>
+    <mat-card-header>Edit Job Advertisment</mat-card-header>
+    <mat-card-content>
+        <div class="form-group">
+            <label for="add-title">Title</label><br>
+            <input type="text"  [(ngModel)]="title" id="add-title">
+        </div>
+        <div class="form-group" id="select-container">
+            <label for="add-employement-type">Employment Type</label><br>
+            <select  type="text" [(ngModel)]="employementType" id="add-employement-type">
+                <option value="FULLTIME" selected='employementType === "FULLTIME"'>Full-time</option>
+                <option value="PARTTIME" selected='employementType === "PARTTIME"'>Part-time</option>
+                <option value="TEMPORARY" selected='employementType === "TEMPORARY"'>Temporary</option>
+                <option value="INTERNSHIP" selected='employementType === "INTERNSHIP"'>Internship</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="add-location">Location</label><br>
+            <input type="text" [(ngModel)]="location" id="add-location">
+        </div>
+        <div class="form-group" id="remote">
+            <span id="remote-span">Remote</span><br>
+            <input *ngIf='remote' type="radio" id="add-remote-yes" value="true" name="remote" checked (click)="changeRemote(true)">
+            <input *ngIf='!remote' type="radio" id="add-remote-yes" value="true" name="remote" (click)="changeRemote(true)">
+            <label for="add-remote-yes">Yes</label>
+            <input *ngIf='!remote' type="radio" id="add-remote-no" value="false" name="remote" checked (click)="changeRemote(false)">
+            <input *ngIf='remote' type="radio" id="add-remote-no" value="false" name="remote" (click)="changeRemote(false)">
+            <label for="add-remote-no">No</label>
+        </div>
+        <div class="form-group">
+            <label for="add-description">Description</label><br>
+            <textarea  type="text" [(ngModel)]="description" id="add-description" placeholder="Job's description..."></textarea>
+        </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-flat-button id="add-jobAd-button" color="primary" (click)="onSubmit()">Save Advertisment</button>
+    </mat-card-actions>
+</mat-card>

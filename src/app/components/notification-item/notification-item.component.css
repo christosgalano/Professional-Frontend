@@ -1,0 +1,38 @@
+@media (min-width:767px) {
+    .createdDate {
+        position: fixed;
+        left: 20%;
+        color: gray;
+    }
+}
+@media (max-width:767px) {
+    .createdDate {
+        position: fixed;
+        right: 15%;
+        color: gray;
+    }
+}
+
+.container {
+    position: relative
+}
+
+a {
+    text-emphasis: 800;
+    color: black;
+    text-decoration: none;
+}
+a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.close {
+    position: absolute;
+    top: -50%;
+    right: -75%;
+}
+
+.close:hover {
+    cursor: pointer;
+}

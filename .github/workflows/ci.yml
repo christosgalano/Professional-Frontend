@@ -1,9 +1,9 @@
 name: Build Professional Frontend
 on:
   push:
-    branches: [ main ]
+    branches: [ main, ci-attempt ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, ci-attempt ]
 
 jobs:
   build:
@@ -31,4 +31,10 @@ jobs:
       - name: npm install and npm run build
         run: |
           npm i
-          ng build
+          npm run build
+          
+      - name: Push Build to Releases
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "dist/professional/*"
+          token: ${{ secrets.TOKEN }}

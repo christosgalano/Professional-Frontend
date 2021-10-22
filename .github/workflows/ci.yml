@@ -34,7 +34,7 @@ jobs:
         # clean install (ci) of the project's dependencies -> to avoid package lock changes
         run: |
           npm ci
-          npm run build
+          npm run ci:build
           
       - name: Create Release
         if: startsWith( github.ref, 'refs/tags/v*' )
